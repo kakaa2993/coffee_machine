@@ -35,30 +35,22 @@ coffee_emoji = '☕'
 # TODO (espresso/latte/cappuccino),
 # TODO report(to see the total report of the machine)
 
-orders = {
-    "off": coffee_emoji,
-    "espresso": "to order espresso",
-    "latte": " to order espresso",
-    "cappuccino": " to order cappuccino",
-    "report": " to see the report of the machine"
-}
 
 
 # TODO: Check resources sufficient?
 def resources(order):
     """ Check resources sufficient? """
     amount_of_water = MENU[order]["ingredients"]["water"]
-    amount_of_coffee = MENU[order]["ingredients"]["water"]
+    amount_of_coffee = MENU[order]["ingredients"]["coffee"]
     amount_of_milk = MENU[order]["ingredients"]["milk"]
-    the_cost = MENU[order]["cost"]
-    if (amount_of_water >= WATER and amount_of_milk >= MILK) and (amount_of_coffee >= COFFEE and the_cost > MONEY_IN_MACHINE):
+    if (WATER >= amount_of_water and MILK >= amount_of_milk) and (COFFEE >= amount_of_coffee):
         return True
-    elif amount_of_water < WATER:
+    elif amount_of_water > WATER:
         return "Sorry there is not enough water."
-    elif amount_of_coffee < COFFEE:
-        return "Sorry there is not enough water."
-    elif amount_of_milk < MILK:
-        return "Sorry there is not enough water."
+    elif amount_of_coffee > COFFEE:
+        return "Sorry there is not enough coffee."
+    elif amount_of_milk > MILK:
+        return "Sorry there is not enough milk."
 
 
 
@@ -92,7 +84,7 @@ def mix_the_ingredients(type_of_coffee):
     global WATER, MILK, COFFEE, MONEY_IN_MACHINE
 
     amount_of_water = MENU[type_of_coffee]["ingredients"]["water"]
-    amount_of_coffee = MENU[type_of_coffee]["ingredients"]["water"]
+    amount_of_coffee = MENU[type_of_coffee]["ingredients"]["coffee"]
     amount_of_milk = MENU[type_of_coffee]["ingredients"]["milk"]
     the_cost = MENU[type_of_coffee]["cost"]
 
@@ -109,13 +101,17 @@ def make_coffee():
         if order == 'report':
             report()
         elif order == 'espresso' or order == 'latte' or order == 'cappuccino':
-            if (resources(order)) == True and (check_payment(order) is not False):
+            refunded = check_payment(order)
+            if (resources(order)) == True and (refunded is not False):
                 mix_the_ingredients(order)
-                print()
-            elif check_payment(order) is False:
+                print(f"Here is ${refunded} in change.")
+                print(f"Here is your {order} ☕️.Enjoy!")
+            elif refunded is False:
                 print("Sorry that's not enough money. Money refunded")
             elif resources(order) != True:
                 print(resources(order))
             else:
                 print("Sorry that's not enough money. Money refunded.")
         order = input(" What would you like? (espresso/latte/cappuccino): ")
+
+make_coffee()
