@@ -31,13 +31,7 @@ COFFEE = 100  # g
 MONEY_IN_MACHINE = 0  # $0
 coffee_emoji = '☕'
 
-# TODO: The user can chose between: off ( to turn of the machine),
-# TODO (espresso/latte/cappuccino),
-# TODO report(to see the total report of the machine)
 
-
-
-# TODO: Check resources sufficient?
 def resources(order):
     """ Check resources sufficient? """
     amount_of_water = MENU[order]["ingredients"]["water"]
@@ -53,18 +47,16 @@ def resources(order):
         return "Sorry there is not enough milk."
 
 
-
 def report():
-    """ display The stock """
+    """ display The stock report """
     print(f"Water: {WATER}ml")
     print(f"Milk: {MILK}ml")
     print(f"Coffee: {COFFEE}g")
     print(f"Money: ${MONEY_IN_MACHINE}")
 
 
-# TODO Process coins.
 def check_payment(coffee):
-    """ Process coins """
+    """ Process coins and return the refunded money """
     print("Please insert coins.")
     quarters = int(input("how many quarters?: "))
     dimes = int(input("how many dimes?: "))
@@ -94,8 +86,8 @@ def mix_the_ingredients(type_of_coffee):
     MONEY_IN_MACHINE += the_cost
 
 
-# TODO Make Coffee
 def make_coffee():
+    """the main function that process all the program"""
     order = input(" What would you like? (espresso/latte/cappuccino): ")
     while order != 'off':
         if order == 'report':
@@ -113,5 +105,6 @@ def make_coffee():
             else:
                 print("Sorry that's not enough money. Money refunded.")
         order = input(" What would you like? (espresso/latte/cappuccino): ")
+
 
 make_coffee()
