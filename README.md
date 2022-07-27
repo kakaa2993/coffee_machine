@@ -4,6 +4,8 @@ The goal of this project is to practice on my python programming sckill, and hav
 You can order a coffee by answering this question : ​What would you like? (espresso/latte/cappuccino):​ ”
 but don't think that it's free! you have to pay for the coffee!(not really 😁)
 here the menu:
+
+
 MENU = {
     "espresso": {
         "ingredients": {
