@@ -35,16 +35,34 @@ coffee_emoji = '☕'
 # TODO report(to see the total report of the machine)
 
 orders = {
-    "off": "to exit the program",
+    "off": coffee_emoji,
     "espresso": "to order espresso",
     "latte": " to order espresso",
     "cappuccino": " to order cappuccino",
     "report": " to see the report of the machine"
 }
-# TODO: Check resources sufficient?
 
+user_order = input(" What would you like? (espresso/latte/cappuccino): ")
+# TODO: Check resources sufficient?
+def resources():
+    """ Check resources sufficient? """
+
+
+
+
+
+
+def report():
+    # The stock:
+    print(WATER)
+    print(MILK)
+    print(COFFEE)
+    print(MONEY)
+    print(coffee_emoji)
 
 # TODO Process coins.
 
 
 # TODO Make Coffee
+def make_coffee(order):
+    if order
