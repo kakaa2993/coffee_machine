@@ -3,6 +3,7 @@ MENU = {
         "ingredients": {
             "water": 50,
             "coffee": 18,
+            "milk": 0,
         },
         "cost": 1.5,
     },
@@ -27,7 +28,7 @@ MENU = {
 WATER = 300  # ml
 MILK = 200  # ml
 COFFEE = 100  # g
-MONEY = 0  # $0
+MONEY_IN_MACHINE = 0  # $0
 coffee_emoji = '☕'
 
 # TODO: The user can chose between: off ( to turn of the machine),
@@ -42,27 +43,59 @@ orders = {
     "report": " to see the report of the machine"
 }
 
-user_order = input(" What would you like? (espresso/latte/cappuccino): ")
+
 # TODO: Check resources sufficient?
-def resources():
+def resources(order):
     """ Check resources sufficient? """
-
-
-
-
+    amount_of_water = MENU[order]["ingredients"]["water"]
+    amount_of_coffee = MENU[order]["ingredients"]["water"]
+    amount_of_milk = MENU[order]["ingredients"]["milk"]
+    the_cost = MENU[order]["cost"]
+    return (amount_of_water >= WATER and amount_of_milk >= MILK) and (
+                amount_of_coffee >= COFFEE and the_cost > MONEY_IN_MACHINE)
 
 
 def report():
-    # The stock:
-    print(WATER)
-    print(MILK)
-    print(COFFEE)
-    print(MONEY)
-    print(coffee_emoji)
+    """ display The stock """
+    print(f"Water: {WATER}ml")
+    print(f"Milk: {MILK}ml")
+    print(f"Coffee: {COFFEE}g")
+    print(f"Money: ${MONEY_IN_MACHINE}")
+
 
 # TODO Process coins.
+def check_payment(order):
+    """ Process coins """
+    print("Please insert coins.")
+    quarters = input("how many quarters?: ")
+    dimes = input("how many dimes?: ")
+    nickles = input("how many nickles?: ")
+    pennies = input("how many pennies?: ")
+
+
+def mix_the_ingredients(type_of_coffee):
+    global WATER, MILK, COFFEE, MONEY_IN_MACHINE
+
+    amount_of_water = MENU[type_of_coffee]["ingredients"]["water"]
+    amount_of_coffee = MENU[type_of_coffee]["ingredients"]["water"]
+    amount_of_milk = MENU[type_of_coffee]["ingredients"]["milk"]
+    the_cost = MENU[type_of_coffee]["cost"]
+
+    WATER -= amount_of_water
+    MILK -= amount_of_milk
+    COFFEE -= amount_of_coffee
+    MONEY_IN_MACHINE -= the_cost
 
 
 # TODO Make Coffee
-def make_coffee(order):
-    if order
+def make_coffee():
+    order = input(" What would you like? (espresso/latte/cappuccino): ")
+    while order != 'off':
+        if order == 'report':
+            report()
+        elif order == 'espresso' or order == 'latte' or order == 'cappuccino':
+            if resources(order) and check_payment(order):
+                mix_the_ingredients(order)
+            else:
+                print("Sorry that's not enough money. Money refunded.")
+        order = input(" What would you like? (espresso/latte/cappuccino): ")
