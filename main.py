@@ -51,8 +51,15 @@ def resources(order):
     amount_of_coffee = MENU[order]["ingredients"]["water"]
     amount_of_milk = MENU[order]["ingredients"]["milk"]
     the_cost = MENU[order]["cost"]
-    return (amount_of_water >= WATER and amount_of_milk >= MILK) and (
-                amount_of_coffee >= COFFEE and the_cost > MONEY_IN_MACHINE)
+    if (amount_of_water >= WATER and amount_of_milk >= MILK) and (amount_of_coffee >= COFFEE and the_cost > MONEY_IN_MACHINE):
+        return True
+    elif amount_of_water < WATER:
+        return "Sorry there is not enough water."
+    elif amount_of_coffee < COFFEE:
+        return "Sorry there is not enough water."
+    elif amount_of_milk < MILK:
+        return "Sorry there is not enough water."
+
 
 
 def report():
@@ -64,16 +71,24 @@ def report():
 
 
 # TODO Process coins.
-def check_payment(order):
+def check_payment(coffee):
     """ Process coins """
     print("Please insert coins.")
-    quarters = input("how many quarters?: ")
-    dimes = input("how many dimes?: ")
-    nickles = input("how many nickles?: ")
-    pennies = input("how many pennies?: ")
+    quarters = int(input("how many quarters?: "))
+    dimes = int(input("how many dimes?: "))
+    nickles = int(input("how many nickles?: "))
+    pennies = int(input("how many pennies?: "))
+    the_coffee_cost = MENU[coffee]["cost"]
+    total_pay = round((quarters * 0.25) + (dimes * 0.10) + (nickles * 0.05) + (pennies * 0.01), 2)
+    if total_pay >= the_coffee_cost:
+        return total_pay - the_coffee_cost
+    else:
+        return False
 
 
 def mix_the_ingredients(type_of_coffee):
+    """ take the type of coffee as input and subtract the amounts of water, milk, coffee, and the cost from the
+    machine of coffee """
     global WATER, MILK, COFFEE, MONEY_IN_MACHINE
 
     amount_of_water = MENU[type_of_coffee]["ingredients"]["water"]
@@ -84,7 +99,7 @@ def mix_the_ingredients(type_of_coffee):
     WATER -= amount_of_water
     MILK -= amount_of_milk
     COFFEE -= amount_of_coffee
-    MONEY_IN_MACHINE -= the_cost
+    MONEY_IN_MACHINE += the_cost
 
 
 # TODO Make Coffee
@@ -94,8 +109,13 @@ def make_coffee():
         if order == 'report':
             report()
         elif order == 'espresso' or order == 'latte' or order == 'cappuccino':
-            if resources(order) and check_payment(order):
+            if (resources(order)) == True and (check_payment(order) is not False):
                 mix_the_ingredients(order)
+                print()
+            elif check_payment(order) is False:
+                print("Sorry that's not enough money. Money refunded")
+            elif resources(order) != True:
+                print(resources(order))
             else:
                 print("Sorry that's not enough money. Money refunded.")
         order = input(" What would you like? (espresso/latte/cappuccino): ")
