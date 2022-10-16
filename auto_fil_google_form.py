@@ -1,7 +1,7 @@
 from selenium import webdriver
 from time import sleep
 
-CHROME_WEBDRIVER_PATH = "E:/Programming/100-days-of-code/chromedriver/chromedriver.exe"
+CHROME_WEBDRIVER_PATH = "your webdriver path"
 GOOGLE_FORM = "https://docs.google.com/forms/d/e/1FAIpQLSerfUOJUB7H6AZgyFiE5LimsC3e5KVsD99YAJom5PUI-NNz7A/viewform?usp=sf_link"
 
 
