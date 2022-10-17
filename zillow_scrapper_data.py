@@ -19,9 +19,7 @@ class Scrapper:
     def get_data(self):
         data = self.soup.select("span[data-test='property-card-price']")
         prices = [price.getText()[:6] for price in data]
-        address = self.soup.select(
-            selector=".StyledPropertyCardDataWrapper-c11n-8-73-8__sc-1omp4c3-0.gXNuqr.property-card-data a")
-        links = [site.get(key="href") if "https://www.zillow.com" in site.get(key="href") else "https://www.zillow.com" + site.get(
-            key="href") for site in address]
+        address = self.soup.select(selector=".StyledPropertyCardDataWrapper-c11n-8-73-8__sc-1omp4c3-0.gXNuqr.property-card-data a")
+        links = [site.get(key="href") if "https://www.zillow.com" in site.get(key="href") else "https://www.zillow.com" + site.get(key="href") for site in address]
         address = [addr.getText() for addr in address]
         return address, prices, links
